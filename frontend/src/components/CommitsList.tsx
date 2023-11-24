@@ -31,7 +31,7 @@ function CommitsList() {
     return (
         <div>
             {Object.entries(groupCommitsByLogin()).map(([login, commitsForLogin]) => (
-                <div key={login}>
+                <div key={login} className='m-3 p-4'>
                     <h3 className="text-2xl font-bold text-left block my-2">{login}</h3>
                     <img
                         src={commitsForLogin[0]?.commitAuthor.avatar_url}
@@ -39,8 +39,10 @@ function CommitsList() {
                         style={{ width: '50px', height: '50px' }} />
                     <ol>
                         {commitsForLogin.map((commit) => (
-                            <div key={commit.commitDetails.node_id}>
+                            <div key={commit.commitDetails.node_id}
+                                className='m-2'>
                                 <li>{commit.commitDetails.message}</li>
+                                <hr />
                             </div>
                         ))}
                     </ol>
@@ -48,6 +50,6 @@ function CommitsList() {
             ))}
         </div>
     );
-}
+};
 
 export default CommitsList;
