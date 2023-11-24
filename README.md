@@ -1,6 +1,6 @@
 # FullTime-Force-Challenge
 
-Aplicación que interactúa con la API de GitHub para mostrar el historial de commits, utilizando Nest.js + React
+Description: An application that interacts with the GitHub API to display commit history, built using Nest.js + React.
 
 ## Objective
 
@@ -8,10 +8,11 @@ The goal of this test is to create an app that displays the git commit history f
 
 ### Technologies Used
 
-- Frontend: [React]
-- Backend: [NestJS]
-- Database: [MongoDB]
-- Deployment: [Railway]
+```plaintext
+    - Frontend: [React] + [TypeScript + SWC]
+    - Backend: [NestJS] + [TypeScript ]
+    - Deployment: [Railway]
+```
 
 You can find documentation on the GitHub API [here](https://developer.github.com/v3/).
 
@@ -29,18 +30,18 @@ You can find documentation on the GitHub API [here](https://developer.github.com
 
 6. **README Instructions:** Provide detailed instructions in the README on how to install and run your project. Failure to include these instructions may result in rejection.
 
-### Evaluation Criteria to the 
+### Evaluation Criteria
 
-We will assess your submission based on the following criteria:
+Will assess submission based on the following criteria:
 
-- Completeness
+- Completeness of the project
 - Code Cleanliness
 - Technology Assortment
 - Software Design
 - Testing Implementation
 - Quality of Instructions in README
 
-### Instructions
+### Instructions to fork and use this app
 
 1. Clone this repository.
 
