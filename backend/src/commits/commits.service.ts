@@ -1,15 +1,20 @@
 import fetch from 'node-fetch';
 import { Injectable } from '@nestjs/common';
 import { Octokit } from '@octokit/core';
-import { Commit, TransformedCommit } from './commits.interface';
-
+import { TransformedCommit } from './commits.interface';
+import { config } from 'dotenv';
+config();
+ 
 @Injectable()
 export class CommitsService {
-    constructor() { }
+    private readonly githubToken: string;
+    constructor() {
+        this.githubToken = process.env.GITHUB_TOKEN || '';
+    }
 
     async getCommits(): Promise<TransformedCommit[]> {
         const octokit = new Octokit({
-            auth: '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',
+            auth: this.githubToken,
             request: {
                 fetch: fetch
             }
@@ -18,7 +23,7 @@ export class CommitsService {
         try {
             const response = await octokit.request('GET /repos/{owner}/{repo}/commits', {
                 owner: 'GuilloSGit',
-                repo: 'FullTime-Force',
+                repo: 'GuilloSGit',
                 headers: {
                     'X-GitHub-Api-Version': '2022-11-28'
                 }
