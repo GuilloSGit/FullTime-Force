@@ -23,7 +23,7 @@ export class CommitsService {
         try {
             const response = await octokit.request('GET /repos/{owner}/{repo}/commits', {
                 owner: 'GuilloSGit',
-                repo: 'GuilloSGit',
+                repo: 'FullTime-Force',
                 headers: {
                     'X-GitHub-Api-Version': '2022-11-28'
                 }
