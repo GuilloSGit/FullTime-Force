@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { CommitsModule } from './commits/commits.module';
 
 @Module({
-  imports: [],
+  imports: [CommitsModule],
 })
 
 export class AppModule {}
