@@ -1,4 +1,4 @@
-# FullTime-Force-Challenge
+# FullTime Force Challenge
 
 Description: An application that interacts with the GitHub API to display commit history, built using Nest.js + React.
 
