@@ -17,7 +17,6 @@ function Nav() {
         setNewCommitsCount(fetchedCommitsCount);
         setNewCommit(true);
       } else {
-        setInitialCount(fetchedCommitsCount)
         setNewCommit(false);
       }
     } catch (error) {
