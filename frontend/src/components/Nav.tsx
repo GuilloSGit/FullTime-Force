@@ -3,8 +3,9 @@ import { getCommitsRequest } from '../api/commits';
 
 function Nav() {
   const [newCommitsCount, setNewCommitsCount] = useState(0);
-  const [initialCount, setInitialCount] = useState(0);
+  const [initialCount, setInitialCount] = useState(100);
   const [newCommit, setNewCommit] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const fetchCounts = async () => {
     try {
@@ -16,6 +17,7 @@ function Nav() {
         setNewCommitsCount(fetchedCommitsCount);
         setNewCommit(true);
       } else {
+        setInitialCount(fetchedCommitsCount)
         setNewCommit(false);
       }
     } catch (error) {
@@ -25,12 +27,22 @@ function Nav() {
 
   useEffect(() => {
     fetchCounts();
+    const intervalId = setInterval(fetchCounts, 20000);
+    setInitialCount(newCommitsCount);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchCounts, 20000);
-    return () => clearInterval(intervalId);
-  }, [initialCount]);
+    if (clicked) {
+      setInitialCount(newCommitsCount);
+      setNewCommit(false);
+      setClicked(false);
+    }
+  }, [initialCount, clicked]);
+
+  const handleClick = () => {
+    setClicked(true);
+  };
 
   return (
     <nav className={`bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 w-full z-1 ${newCommit ? 'bg-red-500' : ''}`}>
@@ -41,10 +53,13 @@ function Nav() {
         </a>
         {newCommit && (
           <div className="flex items-center hover:cursor-pointer hover:text-slate-300">
-            <div className="w-6 h-6 mr-1 pr-1 bg-gray-500 hover:bg-gray-600 text-xs rounded-full flex items-center justify-center">
-              {newCommitsCount}
+            <div className={`w-68 h-6 mr-1 pr-1 bg-gray-300 hover:bg-gray-600 text-xs rounded-full flex items-center justify-center  ${newCommit ? 'text-green-300 bg-black':''}`}>
+              <button onClick={handleClick} disabled={clicked}>
+                {
+                  newCommit && <span className='text-red-700 text-xs m-1'>New Commit! - {newCommitsCount}</span>
+                }
+              </button>
             </div>
-            <span className="text-gray-700 text-xs m-1 hover:text-slate-300">Commits</span>
           </div>
         )}
       </div>
