@@ -4,28 +4,33 @@ import { getCommitsRequest } from '../api/commits';
 function Nav() {
   const [newCommitsCount, setNewCommitsCount] = useState(0);
   const [initialCount, setInitialCount] = useState(0);
-  const [newCommit, setNewCommit] = useState(false)
+  const [newCommit, setNewCommit] = useState(false);
 
-  const fetchInitialCount = async () => {
+  const fetchCounts = async () => {
     try {
       const response = await getCommitsRequest();
       const data = await response.json();
-      setInitialCount(data.commits.length);
+      const fetchedCommitsCount = data.commits.length;
+
+      if (fetchedCommitsCount > initialCount) {
+        setNewCommitsCount(fetchedCommitsCount);
+        setNewCommit(true);
+      } else {
+        setNewCommit(false);
+      }
     } catch (error) {
-      console.error('Error fetching new commits count:', error);
+      console.error('Error fetching commits count:', error);
     }
   };
 
   useEffect(() => {
-    const intervalId = setInterval(fetchInitialCount, 20000);
-    return () => clearInterval(intervalId);
-  })
+    fetchCounts();
+  }, []);
 
   useEffect(() => {
-    if(newCommitsCount > initialCount) {
-      setNewCommit(true);
-    }
-  }, [newCommitsCount]);
+    const intervalId = setInterval(fetchCounts, 20000);
+    return () => clearInterval(intervalId);
+  }, [initialCount]);
 
   return (
     <nav className={`bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 w-full z-1 ${newCommit ? 'bg-red-500' : ''}`}>
@@ -34,7 +39,7 @@ function Nav() {
           <img src="../src/assets/logo.png" className="h-8" alt="GitHub Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">FullTime Force Challenge</span>
         </a>
-        {newCommitsCount > 0 && (
+        {newCommit && (
           <div className="flex items-center hover:cursor-pointer hover:text-slate-300">
             <div className="w-6 h-6 mr-1 pr-1 bg-gray-500 hover:bg-gray-600 text-xs rounded-full flex items-center justify-center">
               {newCommitsCount}
