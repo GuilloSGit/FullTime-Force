@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCommitsRequest } from '../api/commits';
 import { Commit } from '../interfaces/commits.interface';
+import CommitItem from './CommitItem';
 
 function CommitsList() {
     const [commits, setCommits] = useState<Commit[]>([]);
@@ -29,27 +30,36 @@ function CommitsList() {
     };
 
     return (
-        <div>
+        <div className="bg-gray-900 mt-10 mx-auto max-w-screen-md p-3">
             {Object.entries(groupCommitsByLogin()).map(([login, commitsForLogin]) => (
-                <div key={login} className='m-3 p-4'>
-                    <h3 className="text-2xl font-bold text-left block my-2">{login}</h3>
-                    <img
-                        src={commitsForLogin[0]?.commitAuthor.avatar_url}
-                        alt={`${login}'s avatar`}
-                        style={{ width: '50px', height: '50px' }} />
-                    <ol>
-                        {commitsForLogin.map((commit) => (
-                            <div key={commit.commitDetails.node_id}
-                                className='m-2'>
-                                <li>{commit.commitDetails.message}</li>
-                                <hr />
-                            </div>
-                        ))}
-                    </ol>
+                <div key={login} className='flex justify-evenly align-middle col-2 p-3'>
+                    <div className='flex flex-col mt-5 align-middle'>
+                        <img
+                            src={commitsForLogin[0]?.commitAuthor.avatar_url}
+                            alt={`${login}'s avatar`}
+                            style={{ width: '75px', borderRadius: '50%' }} />
+                        <h3 className='text-white text-center text-sm font-bold mt-2 overflow-clip' style={{ maxWidth: '80px'}}>{login}</h3>
+                    </div>
+                    <div className='w-1/2' style={{ minWidth: '75%'}}>
+                        <ol >
+                            {
+                                commitsForLogin.map(
+                                    (commit, index) => (
+                                        <div key={index} style={{ borderLeft: '3px solid #999' }} className='mb-2 mt-3 border-solid border-2 border-gray-800 rounded p-2'>
+                                            <CommitItem
+                                                commit={commit}
+                                                key={index}
+                                            />
+                                        </div>
+                                    )
+                                )
+                            }
+                        </ol>
+                    </div>
                 </div>
             ))}
         </div>
     );
-};
+}
 
 export default CommitsList;
