@@ -1,41 +1,54 @@
 import { useEffect, useState } from 'react';
-import { getCommitsRequest } from '../api/commits';
+import { commitsLength } from '../api/commits';
 
 function Nav() {
   const [newCommitsCount, setNewCommitsCount] = useState(0);
-  const [initialCount, setInitialCount] = useState(100);
+  const [initialCount, setInitialCount] = useState(0);
   const [newCommit, setNewCommit] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  const fetchCounts = async () => {
+  /* Inicio la variable initialCount */
+  const fetchCurrentCount = async () => {
     try {
-      const response = await getCommitsRequest();
-      const data = await response.json();
-      const fetchedCommitsCount = data.commits.length;
-
-      if (fetchedCommitsCount > initialCount) {
-        setNewCommitsCount(fetchedCommitsCount);
-        setNewCommit(true);
-      } else {
-        setNewCommit(false);
-      }
+      setInitialCount(await commitsLength());
     } catch (error) {
-      console.error('Error fetching commits count:', error);
+      console.log('Error obtaining current count of commits: ', error)
     }
   };
+  
+  /* Comparo con la variable newCommitCount */
+  const checkNewCommits = async () => {
+    try {
+      setNewCommitsCount(await commitsLength())
+      /* Si hay nuevos manda a true newCommit */
+      if (initialCount < newCommitsCount) {
+        console.log("New commit!");
+        setNewCommit(true);
+        setInitialCount(newCommitsCount);
+      /* Si no hay nuevos */
+      } else {
+        setNewCommit(false);
+        setNewCommitsCount(initialCount);
+      }
+      /* Si falla la cuenta */
+    } catch (error) {
+      console.log('Error obtaining new count of commits: ', error)
+    }
+  }
 
   useEffect(() => {
-    fetchCounts();
-    const intervalId = setInterval(fetchCounts, 20000);
-    setInitialCount(newCommitsCount);
+    checkNewCommits();
+    const intervalId = setInterval(checkNewCommits, 30000);
     return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     if (clicked) {
-      setInitialCount(newCommitsCount);
+      fetchCurrentCount();
       setNewCommit(false);
       setClicked(false);
+      setNewCommitsCount(0);
+      setInitialCount(initialCount)
     }
   }, [initialCount, clicked]);
 
