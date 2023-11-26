@@ -30,7 +30,7 @@ function CommitsList() {
     };
 
     return (
-        <div className="bg-gray-900 mt-10 mx-auto max-w-screen-md p-3">
+        <div className="bg-gray-900 mt-10 mx-auto max-w-screen-md p-3 md:min-w-min" style={{minWidth: '650px'}}>
             {Object.entries(groupCommitsByLogin()).map(([login, commitsForLogin]) => (
                 <div key={login} className='flex justify-evenly align-middle col-2 p-3'>
                     <div className='flex flex-col mt-5 align-middle'>
