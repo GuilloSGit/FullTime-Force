@@ -26,7 +26,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src","src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.jsx", "setupTests.ts"
   ],
   "references": [
     {
