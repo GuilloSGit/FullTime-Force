@@ -113,3 +113,8 @@ Expanding Sections in the Application: I couldn't add more sections to the appli
 Closer Frontend-Backend Relationship: Due to time constraints, the interaction between the frontend and backend was limited to a single endpoint.
 
 I recognize the potential for improving this integration to achieve a more robust and scalable application.
+
+### Deployment
+
+Back -> https://fulltime-force-back-production.up.railway.app/api/commits
+Front -> https://fulltime-force-front-production.up.railway.app/

@@ -8,12 +8,14 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest --ui"
+    "test": "vitest --ui",
+    "start": "serve dist"
   },
   "dependencies": {
     "jsdom": "^23.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "serve": "^14.2.1",
     "vitest": "^0.34.6"
   },
   "devDependencies": {
